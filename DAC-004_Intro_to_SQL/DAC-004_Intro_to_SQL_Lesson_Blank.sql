@@ -4,7 +4,14 @@
 
 -- Select department table, the employee table and vendor table. Let's explore the database a little!
 
+SELECT *
+FROM humanresources.shift
 
+SELECT*
+FROM huamnresources.employee
+
+SELECT*
+FROM purchasing.vendor
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -12,15 +19,22 @@
 
 -- Select only name, start time and end time.
 
-
-
+SELECT
+	name,
+	starttime,
+	endtime
+FROM humanresources.shift;
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 -- SELECT DISTINCT values: Unique column value
 
 -- Distinct group names from department and businessentityid from jobcandidate
 
+SELECT DISTINCT groupname
+FROM humanresources.department;
 
+SELECT DISTINCT businessentityid
+FROM humanresources.jobcandidate;
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -34,7 +48,13 @@
 
 -- Limit the table productvendor to 10 rows and purchaseorderdetail to 100 rows
 
+SELECT*
+FROM purchasing.productvendor
+LIMIT 10;
 
+SELECT*
+FROM purchasing.purchaserorderdetail
+LIMIT 100;
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -42,42 +62,78 @@
 
 -- From the customer table Multiplcation/division/addition/subtraction the store_id
 
-
+SELECT
+	customerid,
+	storeid * 10 AS tendold
+FROM sales.customer
+LIMIT 15;
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 --Q1: SELECT the DISTINCT title, last name, middlename and first_name of each person from the person schema. Return only 231 rows.
 --A1;
 
-
+SELECT DISTINCT 
+	title,
+	lastname,
+	middlename,
+	firstname
+FROM person.person
+LIMIT 231;
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 -- WHERE clause: = 
 -- gender is male
 
+SELECT
+	jobtitle,
+	maritalstatus,
+	gender
+FROM humanresources.employee
+WHERE gender = 'M';
 
 -- Only Research and Development
 
+SELECT*
+FROM humanresources.department
+WHERE groupname = 'Research and Development';
 
 -- When dealing with NULL values
 
-
+SELECT*
+FROM purchasing.productvendor
+WHERE onorderqty IS NOT NULL;
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 -- WHERE clause: Arithmetic filter
 
 -- From customer table, territoryid = 4
-
+SELECT*
+FROM sales.customer 
+WHERE territoryid = 4
+LIMIT 100;
 
 -- From person table, emailpromotion <> 0
 
+SELECT*
+FROM person.person 
+WHERE emailpromotion <> 0
+LIMIT 100;
 
 -- From employee table, vacationhours >= 99
 
+SELECT*
+FROM humanresources.employee
+WHERE vacationhours >= 99
+LIMIT 50;
 
 -- From employee table, sickleavehours <= 20
 
+SELECT*
+FROM humanresources.employee
+WHERE sickleavehours <= 20
+LIMIT 50;
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -85,6 +141,10 @@
 
 -- From employee table, select either Design Engineer or Tool Designer
 
+SELECT*
+FROM humanresources.employee
+WHERE jobtitle = 'Design Engineer' 
+	OR jobtitle = 'Tool Designer';
 
 -- From product, select either Black or Silver
 
@@ -95,6 +155,10 @@
 
 -- From Vendor, preferredvendorstatus and activeflag must be TRUE
 
+SELECT*
+FROM purchasing.vendor 
+WHERE preferredvendorstatus = TRUE
+	AND activeflag = TRUE
 
 -- From employee, gender must be Male and maritalstatus must be single
 
@@ -105,12 +169,25 @@
 
 -- From the employee table pick either, marital status as single and gender male or marital status as married and gender female.
 
+SELECT
+	jobtitle,
+	gender,
+	maritalstatus,
+	vacationhours,
+	sickleavehours
+FROM humanresources.employee
+WHERE (maritalstatus = 'S' AND gender = 'M')
+	OR (maritalstatus = 'M' AND gender = 'F');
 
 -- Example of poor formatting and logic.
 -- From the salesperson table select territory_id either 4 or 6 and salesquota either 250000 or 300000
 
 --
 
+SELECT*
+FROM sales.salesperson
+WHERE territoryid = 4 OR territoryid = 6
+	AND salesquota = 250000 OR salesquota = 300000;
 
 --
 
@@ -120,7 +197,10 @@
 -- Reformatted version:
 -- The importance of having good SQL formatting when writing your SQL code.
 
-
+SELECT*
+FROM sales.salesperson
+WHERE (territoryid = 4 OR territoryid = 6)
+	AND (salesquota = 250000 OR salesquota = 300000);
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -131,7 +211,13 @@
 -- '1984-04-30'
 -- '1985-05-04'
 
-
+SELECT*
+FROM humanresources.employee
+WHERE birthdate IN (
+	'1977-06-06 00:00:00',
+	'1984-04-30 00:00:00',
+	'1985-05-04 00:00:00'
+);
 
 -- Find all the middle names that contains either A or B or C.
 
